@@ -26,7 +26,8 @@ public class UserController {
     @GetMapping("/status/check")
     public String status() {
 
-        return "Photo-App-Api-Users is working on port " + env.getProperty("local.server.port");
+        return "Photo-App-Api-Users is working on port " + env.getProperty("local.server.port") +
+                ", with token= " + env.getProperty("token.secret");
     }
 
     @PostMapping
