@@ -1,7 +1,10 @@
 package com.saberdot.photoapp.api.users.shared;
 
+import com.saberdot.photoapp.api.users.ui.model.AlbumResponseModel;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 
 public class UserDto implements Serializable {
@@ -15,6 +18,7 @@ public class UserDto implements Serializable {
     private String password;
     private String userId;  // Corrected capitalization
     private String encryptedPassword;
+    private List<AlbumResponseModel> albums;
 
     // Getter and setter for firstName
     public String getFirstName() {
@@ -63,5 +67,13 @@ public class UserDto implements Serializable {
 
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
+    }
+
+    public List<AlbumResponseModel> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<AlbumResponseModel> albums) {
+        this.albums = albums;
     }
 }
