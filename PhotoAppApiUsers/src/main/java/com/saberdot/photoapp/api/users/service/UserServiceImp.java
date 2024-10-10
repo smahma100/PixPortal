@@ -6,6 +6,7 @@ import com.saberdot.photoapp.api.users.data.UserEntity;
 import com.saberdot.photoapp.api.users.data.UserRepository;
 import com.saberdot.photoapp.api.users.shared.UserDto;
 import com.saberdot.photoapp.api.users.ui.model.AlbumResponseModel;
+import feign.FeignException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
@@ -34,9 +35,11 @@ public class UserServiceImp implements UsersService {
 
     UserRepository userRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder;
-   // RestTemplate restTemplate;
+    // RestTemplate restTemplate;
     Environment environment;
     AlbumsServiceClient albumsServiceClient;
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public UserServiceImp(UserRepository userRepository,
@@ -106,10 +109,15 @@ public class UserServiceImp implements UsersService {
         List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
 */
 
-        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        List<AlbumResponseModel> albumsList = null;
+        try {
+            albumsList = albumsServiceClient.getAlbums(userId);
+        } catch (FeignException e) {
+            logger.error(e.getLocalizedMessage());
+        }
+
         // Set the fetched albums to the UserDto
         userDto.setAlbums(albumsList);
-
         return userDto;
     }
 }
