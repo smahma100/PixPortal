@@ -1,7 +1,9 @@
 package com.saberdot.photoapp.api.users.ui.controller;
 
+import com.saberdot.photoapp.api.users.data.AlbumsServiceClient;
 import com.saberdot.photoapp.api.users.service.UsersService;
 import com.saberdot.photoapp.api.users.shared.UserDto;
+import com.saberdot.photoapp.api.users.ui.model.AlbumResponseModel;
 import com.saberdot.photoapp.api.users.ui.model.CreateUserRequestModel;
 import com.saberdot.photoapp.api.users.ui.model.CreateUserResponseModel;
 import com.saberdot.photoapp.api.users.ui.model.UserResponseModel;
@@ -15,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,6 +28,9 @@ public class UserController {
 
     @Autowired
     UsersService userService;
+
+    @Autowired
+    AlbumsServiceClient albumsService;
 
     @GetMapping("/status/check")
     public String status() {
@@ -59,4 +66,12 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+
+    @GetMapping("/users/{id}/albums")
+    public List<AlbumResponseModel> getAlbums(@PathVariable String id) {
+       // throw new RuntimeException("Albums service is down");
+
+        return albumsService.getAlbums(id);
+    }
+
 }
