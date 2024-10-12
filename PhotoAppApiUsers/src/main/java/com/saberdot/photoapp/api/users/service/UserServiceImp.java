@@ -109,12 +109,19 @@ public class UserServiceImp implements UsersService {
         List<AlbumResponseModel> albumsList = albumsListResponse.getBody();
 */
 
+
+/*
         List<AlbumResponseModel> albumsList = null;
         try {
             albumsList = albumsServiceClient.getAlbums(userId);
         } catch (FeignException e) {
             logger.error(e.getLocalizedMessage());
         }
+ */
+
+        logger.debug("before album");
+        List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+        logger.debug("after album");
 
         // Set the fetched albums to the UserDto
         userDto.setAlbums(albumsList);
